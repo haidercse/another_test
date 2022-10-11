@@ -116,7 +116,7 @@
                              <p>${data.comment}</p>
                         </div>`;
                    
-                    $("#comment_section").push(op);
+                    $("#comment_section").append(op);
                 },
                 error: function(err) {
                   console.log(err);
