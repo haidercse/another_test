@@ -65,11 +65,7 @@
                     {{ $posts->links() }}
 
 
-                    <div class="card mt-4">
-                        <div class="card-body">
-                            <h1>JJJJ</h1>
-                        </div>
-                    </div>
+                  
                 </div>
 
             </div>

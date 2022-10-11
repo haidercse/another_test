@@ -50,6 +50,27 @@
                         <p>{{ $post->details }}</p>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Add A Comment</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="comment">
+                            @csrf
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" name="name" value=""
+                                    class="form-control" id="name" aria-describedby="emailHelp">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Comment</label>
+                                <textarea name="details" class="form-control" id="details" cols="30" rows="5"> </textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
 
             </div>
         </div>
