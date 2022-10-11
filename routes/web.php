@@ -28,6 +28,7 @@ Route::post('/update/{id}',[PostController::class,'update'])->name('post.update'
 Route::get('/details/{id}',[PostController::class,'postDetails'])->name('post.details');
 Route::get('/list',[PostController::class,'list'])->name('user.list');
 Route::post('/list',[PostController::class,'userStore'])->name('user.store');
+Route::get('/get_all_comment',[PostController::class,'storeComment'])->name('get_all_comment');
 
 
 require __DIR__.'/auth.php';

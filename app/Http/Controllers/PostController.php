@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -74,5 +75,29 @@ class PostController extends Controller
         $user->password  = Hash::make('12345678');
         $user->save();
         return back()->with('success', 'User Created successfully');
+    }
+
+    public function storeComment(Request $request){
+        // dd($request->toArray());
+        $count = Comment::where('user_id',$request->user_id)->count();
+        if( $count > 0){
+            $parent_id = 1;
+
+            $comment = new Comment();
+            $comment->name = $request->name;
+            $comment->comment = $request->comment;
+            $comment->user_id = $request->user_id;
+            $comment->parent_id = $parent_id;
+            $comment->save();
+        }else{
+            $comment = new Comment();
+            $comment->name = $request->name;
+            $comment->comment = $request->comment;
+            $comment->user_id = $request->user_id;
+            $comment->save();
+        }
+       
+        
+        return response()->json($comment);
     }
 }

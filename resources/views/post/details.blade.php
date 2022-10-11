@@ -55,24 +55,73 @@
                         <h4>Add A Comment</h4>
                     </div>
                     <div class="card-body">
-                        <form id="comment">
-                            @csrf
+                        <form id="comment_form">
+                            <input type="hidden" name="user_id" id="user_id" value="{{ auth()->user()->id }}">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" name="name" value=""
-                                    class="form-control" id="name" aria-describedby="emailHelp">
+                                <input type="text" name="name" value="" class="form-control" id="comment_name"
+                                    aria-describedby="emailHelp">
 
                             </div>
                             <div class="form-group">
                                 <label for="name">Comment</label>
-                                <textarea name="details" class="form-control" id="details" cols="30" rows="5"> </textarea>
+                                <textarea name="comment" class="form-control" id="comment" cols="30" rows="5"> </textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
                 </div>
-
+               <div class="card"  id="comment_section">
+               
+               </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('custom-scripts')
+    <script>
+        $("#comment_form").submit(function(e){
+            e.preventDefault();
+            var user_id = $("#user_id").val();
+            var name = $("#comment_name").val();
+            var comment = $("#comment").val();
+            submit_comment();
+        });
+        function submit_comment() {
+            var user_id = $("#user_id").val();
+            var name = $("#comment_name").val();
+            var comment = $("#comment").val();
+
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var APP_URL = "{{ route('get_all_comment') }}";
+            $.ajax({
+                type: "GET",
+                url: APP_URL,
+                dataType: "JSON",
+                data: {
+                    user_id : user_id,
+                    name : name,
+                    comment : comment,
+                },
+                success: function(data) {
+                   
+                    op = `<div class="card_body">
+                             <h1>${data.name}</h1>
+                             <p>${data.comment}</p>
+                        </div>`;
+                   
+                    $("#comment_section").push(op);
+                },
+                error: function(err) {
+                  console.log(err);
+                }
+            });
+        }
+    </script>
+@endpush
